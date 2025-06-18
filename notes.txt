@@ -1,0 +1,229 @@
+Go lang
+
+open source - google 
+fast , concurency , statically typed 
+complier -- translated to machine code 
+
+production 
+
+go build 
+go mod init example.com/firstapp
+./firstapp  
+
+package main tells where execution starts 
+main()   execution starts here -- only one main function
+
+go run .
+
+go get path of package
+
+pointers
+varaible stores address of another varaible
+
+struct
+group diffrent types of datatypes into one
+
+type StructName struct{
+    firstname string
+    lastname string
+    age int
+    birthdate string
+    createdat time.Time
+}
+
+var appuser user
+
+appuser = user{
+    firstname : firstName,
+    lastname : lastname
+    age : age
+    birthdate : birthdate
+    craetedAt:time.Now()
+
+}
+
+// if oreder is same you can vomit first argumnet
+
+appuser = user{
+     firstName,
+    lastname
+    age
+    birthdate
+    time.Now()
+
+}
+
+appuser = user{}  //empty struct
+
+print(u.firstname,u.age)
+
+st := new(Student)
+
+st := student{ "Joe",7}
+
+
+//change value
+calArea(&c)
+
+func calArea(c *Circle){
+    (*c).area =c.radius * c.radius * 3.142
+}
+comparing struct
+strcut of diffrent structures comparision will give error
+struct of same structure will be always true
+
+method with structures
+func (c *Circle) calacArea(){
+    c.area = 3.14 * c.radius * c.radius
+}
+
+c:=Circle{radius:5}
+c.calacArea()
+
+method sets
+
+type Rectangle struct {
+        length  int
+        breadth int
+}
+
+func (r Rectangle) area() int {
+        return r.length * r.breadth
+}
+
+func (r *Rectangle) incLength(n int) {
+        for i := 0; i < n; i++ {
+            r.length += i
+        }
+}
+
+func main() {
+        r := Rectangle{breadth: 10, length: 5}
+        fmt.Println(r.area())
+        fmt.Println(r)
+        r.incLength(7)
+        fmt.Println(r.area())
+        fmt.Println(r)
+}
+
+
+type Employee struct {
+        eid int
+        id  int
+}
+
+func main() {
+        employees := make([]Employee, 5)
+        for i := range employees {
+                employees[i] = Employee{i, i + 10}
+                fmt.Println(employees[i])
+        }
+}
+
+interface 
+blueprint for method sets 
+provides function signature for methods
+
+type interfacname interface{
+    getRateofOrder() float64
+    calReturn() float64
+}
+
+implicitly implements iterfaces
+
+type Student interface {
+        getPercentage() int
+        getName() string
+}
+
+type Undergrad struct {
+        name   string
+        grades []int
+}
+
+func (u Undergrad) getPercentage() int {
+        sum := 0
+        for _, v := range u.grades {
+            sum += v
+        }
+        return sum / len(u.grades)
+}
+func (u Undergrad) getName() string {
+        return u.name
+}
+
+func printData(s Student) {
+        fmt.Println(s.getName())
+        fmt.Println(s.getPercentage())
+}
+
+func main() {
+        grades := []int{90, 75, 80}
+        u := Undergrad{"Ross", grades}
+        printData(u)
+}
+
+//mutation methods
+func (u *user) clear(){
+    u.fname=""
+    u.lname=""
+}
+
+func newUser(fn,ln,age,birth) (*user,error){
+    if fn ==""  || ln==""
+{
+    return nill,errors.New("Error")
+}    return &user{
+        firstname:fn
+        lname :ln
+        age:age
+        birth:birth
+    }
+}
+var appuser *user
+appuser,error =newUser(fn,ln,age,birth)
+
+start with uppercase to make it available outside in package
+
+struct embedings
+
+type Admin struct{
+    email string
+    pass string
+    User
+}
+
+func newAdmin(email,pass string) Admin{
+    return Admin{
+        email:email
+        pass:pass
+        User:User{
+            fname:"value"
+            lname:"value"
+            age: 0
+
+        }
+    }
+}
+
+alias
+type customstring string 
+var name customstring
+
+struct tags
+Title string `structtag`
+
+
+generics
+package main
+
+import "fmt"
+
+func main() {
+	result := add(1, 2)
+	fmt.Println(result)
+}
+
+func add[T int | float64 | string](a, b T) T {
+	return a + b
+}
