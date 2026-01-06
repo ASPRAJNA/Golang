@@ -1,0 +1,175 @@
+Go - open source programming lang developed by google
+
+
+- focus on simplicity clarity , scalability
+- high performance ,concurency
+- batteries included (stnd lib)
+- Static typing (type safe lang)
+
+Used for 
+
+-- network & api
+-- cli tools
+-- microservices 
+
+
+* install Go extension 
+
+
+----------------------------------------------
+first go program
+
+package main
+
+import "fmt"
+
+func main(){
+    fmt.Print("hello world")
+}
+
+go run main.go
+------------------------------------------------
+execution starts from main() function
+
+package is necessary at beginning of the function
+one package atleast per program  (organize the code )
+packages can be imported 
+
+import "fmt"
+https://pkg.go.dev/
+
+why main as pacakge  ?
+entery point ,
+go build (make production friendly)
+
+go mod init   - turns to module 
+go mod init github.com/first-app  ( creates go.mod)
+run -- go build (creatd .exe file .. can be run directly )  
+-   ./modulename
+
+share application to other people 
+
+only one main func allowed (executable prog must have main)
+
+-----------------------------------
+go mod init myproject
+
+
+Tells Go:
+“This is the root of my project”
+“All imports start from this module name”
+
+module github.com/prajna/myapp
+import "github.com/prajna/myapp/utils"
+
+
+When you run go build:
+Reads go.mod
+Downloads missing dependencies
+Compiles packages in correct order
+Links everything into one binary
+👉 No JVM, no interpreter, no runtime install required on the target machine.
+
+Detects compile-time errors
+Produces production-ready binary
+Ensures dependency correctness
+📌 In CI/CD pipelines, go build is often the first validation step
+
+pacakge is a collection of files
+
+
+other names rather than pacakge creates libs not excutables
+--------------------------------------
+go mod init myapp
+        ↓
+Creates go.mod (module boundary)
+        ↓
+Write code in package main
+        ↓
+Define func main()
+        ↓
+go build
+        ↓
+Executable binary created
+        ↓
+Run the program
+-----------------------------------------
+| Go Concept     | Real Life Example              |
+| -------------- | ------------------------------ |
+| `go mod init`  | Project registration           |
+| `go.mod`       | Dependency contract            |
+| `package main` | “This is an application” label |
+| `main()`       | Program’s ignition switch      |
+| `go build`     | Manufacturing the product      |
+| Binary         | Finished machine               |
+
+go run → compile + execute immediately (temporary)  (mainly for dev , testing)  (
+go build → compile and keep the executable (permanent) ( deployment and production)
+
+| Aspect             | `go run`                   | `go build`                 |
+| ------------------ | -------------------------- | -------------------------- |
+| Creates executable | ❌ Temporary                | ✅ Permanent                |
+| Binary visible     | ❌ No                       | ✅ Yes                      |
+| Execution          | Immediate                  | Manual (`./binary`)        |
+| Speed              | Slower (compile every run) | Faster after build         |
+| Use case           | Development, testing       | Production, deployment     |
+| CI/CD usage        | ❌ Rare                     | ✅ Very common              |
+| Debugging          | Quick experiments          | Real execution environment |
+
+--------------------------------------------------------------------------------------------------------
+
+go build → builds a binary in the current directory  (Apps)  build here
+go install → builds and installs the binary to $GOBIN / $GOPATH/bin   (Tools)  install globally
+
+| Feature             | `go build`        | `go install`             |
+| ------------------- | ----------------- | ------------------------ |
+| Creates binary      | ✅ Yes             | ✅ Yes                    |
+| Binary location     | Current directory | `$GOBIN` / `$GOPATH/bin` |
+| Global command      | ❌ No              | ✅ Yes                    |
+| Overwrites existing | Manual            | Automatic                |
+| Used for apps       | ✅ Yes             | ⚠️ Rare                  |
+| Used for CLI tools  | ❌ No              | ✅ Yes                    |
+| CI / Production     | ✅ Yes             | ❌ No                     |
+
+go build compiles Go code and creates a binary in the current directory, mainly used for application builds.
+go install compiles and installs the binary into Go’s bin directory, making it globally accessible, and is mainly used for CLI tools.
+
+
+------------------------------------------------------------------------------------------------
+go mod tidy
+
+cleans and synchronizes your module dependencies
+
+Adding missing dependencies
+Removing unused dependencies
+Updating go.mod
+Updating go.sum
+
+go.sum is a security & reproducibility file
+the exact same dependency code is used every time, everywhere.
+It prevents:
+Supply-chain attacks
+Silent dependency changes
+Version mismatches
+❌ Never delete go.sum
+❌ Never gitignore it
+
+go mod tidy
+→ scan code
+→ fix deps
+→ clean mod
+→ secure sum
+
+
+
+| Aspect          | go.mod               | go.sum              |
+| --------------- | -------------------- | ------------------- |
+| Purpose         | Declare dependencies | Verify dependencies |
+| Edited by       | Go tooling           | Go tooling          |
+| Human readable  | Yes                  | No (hashes)         |
+| Version control | Required             | Required            |
+| Security role   | Low                  | Very high           |
+
+-----------------------------------------------------------------------------------------------------
+
+import "modulename/folder"
